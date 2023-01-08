@@ -1,9 +1,15 @@
+import os
 from typing import Iterable
+
+from flask import request, abort
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, 'data')
 
 
 def filter_query(value: str, data: Iterable[str]):
-    return filter(lambda x: x in value, data)  # х - строка из data, проверяем что value есть в этой строке,
-                                              # если есть, то попадет в фильтр
+    return filter(lambda x: value in x, data)  # х - строка из data, проверяем что value есть в этой строке,
+    # если есть, то попадет в фильтр
 
 
 def unique_query(data, *args, **kwargs):
@@ -25,5 +31,7 @@ def sort_query(value, data):
     return sorted(data, reverse=reverse)
 
 
-def file_name_query(data, *args, **kwargs):
-    return set(data)
+def file_name_query():
+    file_path = os.path.join(DATA_DIR, 'file_name')
+    if not os.path.exists(file_path):
+        return abort(400)

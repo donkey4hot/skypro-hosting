@@ -15,3 +15,4 @@ class RequestSchema(Schema):
 
 class BatchRequestSchema(Schema):
     queries = fields.Nested(RequestSchema, many=True)
+    path = fields.Str(required=True)
