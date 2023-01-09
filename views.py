@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, Response
 from marshmallow import ValidationError
 
 from builder import build_query
@@ -10,7 +10,7 @@ FILE_NAME = 'data/apache_logs.txt'  # Константа
 
 
 @main_bp.route('/perform_query', methods=['POST'])  # Метод ограничен на POST (согласно условий задания)
-def perform_query():
+def perform_query() -> str | Response:
     data = request.json  # Принимаем данные в формате json
     try:
         validated_data = BatchRequestSchema().load(data)

@@ -1,18 +1,19 @@
-from typing import Optional
+from typing import Optional, Iterator, Callable
 
-from functions import filter_query, unique_query, limit_query, map_query, sort_query, file_name_query
+from functions import filter_query, unique_query, limit_query, map_query, sort_query, file_name_query, pattern_query
 
-CMD_TO_FUNCTIONS = {
+CMD_TO_FUNCTIONS: dict[str, Callable] = {
     'filter': filter_query,
     'unique': unique_query,
     'limit': limit_query,
     'map': map_query,
     'sort': sort_query,
-    'file_name': file_name_query
+    'file_name': file_name_query,
+    'pattern': pattern_query
 }
 
 
-def read_file(file_name: str):
+def read_file(file_name: str) -> Iterator[str]:
     with open(file_name) as file:
         for line in file:
             yield line
