@@ -1,7 +1,7 @@
 import os
-from typing import Iterable, Iterator, Any, Set
+from typing import Iterable, Iterator, Any
 
-from flask import request, abort
+from flask import abort
 
 import re
 
@@ -18,7 +18,7 @@ def unique_query(data: Iterator[str], *args: Any, **kwargs: Any) -> set[str]:
     return set(data)
 
 
-def limit_query(value: str, data: Iterator[str]) -> Iterator[str]:
+def limit_query(value: str, data: Iterator[str]) -> Iterable[str]:
     limit: int = int(value)
     return list(data)[:limit]
 
@@ -28,7 +28,7 @@ def map_query(value: int, data: Iterator[str]) -> Iterator[str]:
     return map(lambda x: x.split(' ')[column_number], data)
 
 
-def sort_query(value: str, data: Iterator[str]) -> Iterator[str]:
+def sort_query(value: str, data: Iterator[str]) -> Iterable[str]:
     reverse = value == 'desc'
     return sorted(data, reverse=reverse)
 
